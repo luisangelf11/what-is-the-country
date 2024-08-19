@@ -7,6 +7,7 @@ import { getCountries } from '../api/country';
 import BackHome from '../components/BackHome';
 import { useLoader } from '../hooks/useLoader';
 import Loader from '../components/Loader';
+import { toast, Toaster } from 'react-hot-toast'
 
 export default function GameHard() {
     //states
@@ -44,9 +45,11 @@ export default function GameHard() {
     const handleSubmit = (e) => {
         e.preventDefault()
         if (countrys[randomIndex].name.common.toLowerCase() === countryName) {
-            alert('Good Job!')
+            toast('Good Job!', {
+                icon: '👏',
+            });
             incrementPoints()
-        } else alert(`Incorrect this is ${countrys[randomIndex].name.common} :(`)
+        } else toast.error(`Incorrect this is ${countrys[randomIndex].name.common}`)
         nextLevel()
         generateIndex()
         setCountryName('')
@@ -70,6 +73,10 @@ export default function GameHard() {
                     </form>
                     : <EndGame points={points} limit={100} />}
             </article>}
+            <Toaster
+                position="top-center"
+                reverseOrder={false}
+            />
         </section>
     )
 }
